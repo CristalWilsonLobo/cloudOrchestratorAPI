@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  localstack:
+    image: localstack/localstack
+    environment:
+      - SERVICES=dynamodb,s3
+      - DEBUG=1
+    ports:
+      - "4566:4566"
+      - "4571:4571"
+    volumes:
+      - "./localstack:/var/lib/localstack"
+
+  app:
+    build:
+      context: .
+      dockerfile: dockerapi
+    ports:
+      - "5001:5000"
+    environment:
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_DEFAULT_REGION=us-east-1
+    depends_on:
+      - localstack

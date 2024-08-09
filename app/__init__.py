@@ -4,9 +4,15 @@ from botocore.exceptions import NoCredentialsError, PartialCredentialsError
 
 restapp = Flask(__name__)
 
-# Configure AWS clients
-dynamodb = boto3.resource('dynamodb', region_name='us-east-1', endpoint_url='http://localstack:4566')
-s3 = boto3.client('s3', region_name='us-east-1', endpoint_url='http://localstack:4566')
+session = boto3.Session(
+    aws_access_key_id='test',
+    aws_secret_access_key='test',
+    region_name='us-east-1'
+)
+
+# Configure AWS clients 
+dynamodb = session.resource('dynamodb', region_name='us-east-1', endpoint_url='http://localstack:4566')
+s3 = session.client('s3', region_name='us-east-1', endpoint_url='http://localstack:4566')
 
 # Guest table in DynamoDB 
 table_name = 'GuestTable'
@@ -17,7 +23,7 @@ try:
             {
                 'AttributeName': 'id',
                 'KeyType': 'HASH'
-            },
+            }
         ],
         AttributeDefinitions=[
             {

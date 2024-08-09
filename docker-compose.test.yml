@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  localstack:
+    image: localstack/localstack
+    environment:
+      - SERVICES=dynamodb,s3
+      - DEBUG=1
+    ports:
+      - "4566:4566"
+      - "4571:4571"
+    volumes:
+      - "./localstack:/var/lib/localstack"
+
+  test:
+    build:
+      context: .
+      dockerfile: dockertest
+    depends_on:
+      - localstack
