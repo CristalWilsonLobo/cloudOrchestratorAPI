@@ -1,4 +1,7 @@
-# Dockerized REST API
+# Docker Compose for Multiple Containers 
+The project serves the purpose to run two containers, one for rest-based application and other for localstack.
+
+### Project Description
 The project serves the purpose to view the guest list and add/update/remove a guest.
 This project contains a Dockerized REST API built with Flask. The API includes endpoints for GET, POST, PUT, and DELETE operations on a guest list. The project also includes automated tests for each endpoint.
 <BR>
@@ -22,24 +25,24 @@ The REST API is built using Flask, and it includes the following endpoints that 
 GET all guests
 
 ```sh
-curl -X GET http://127.0.0.1:5000/items
+curl -X GET http://127.0.0.1:5001/items
 ```
 
 GET specific guest
 ```sh
-curl -X GET http://127.0.0.1:5000/item/3
+curl -X GET http://127.0.0.1:5001/item/3
 ```
 POST add new guest
 ```sh
-curl -X POST http://127.0.0.1:5000/item -H "Content-Type: application/json" -d '{"id": 5, "name": "Test User 5"}'
+curl -X POST http://127.0.0.1:5001/item -H "Content-Type: application/json" -d '{"id": 5, "name": "Test User 5"}'
 ```
 PUT update specific guest
 ```sh
-curl -X PUT http://127.0.0.1:5000/item/5 -H "Content-Type: application/json" -d '{"name": "Updated Test User 5"}'
+curl -X PUT http://127.0.0.1:5001/item/5 -H "Content-Type: application/json" -d '{"name": "Updated Test User 5"}'
 ```
 DELETE remove specific guest
 ```sh
-curl -X DELETE http://127.0.0.1:5000/item/5
+curl -X DELETE http://127.0.0.1:5001/item/5
 ```
 <BR>
 To run the application, execute the docker build and run commands or use the provided `runapi.sh` script:
@@ -47,11 +50,11 @@ To run the application, execute the docker build and run commands or use the pro
 ### Using Docker Commands
 #### Docker Build
 ```sh
-docker build -f dockerapi -t rest-api .
+docker-compose build
 ```
 #### Docker Run
 ```sh
-docker run -p 5000:5000 rest-api
+docker-compose up 
 ```
 ### Using Script
 ```sh
@@ -82,12 +85,27 @@ To run the tests for each endpoint, execute the docker build and run commands or
 ### Using Docker Commands
 #### Docker Build
 ```sh
-docker build -f dockertest -t rest-api-test .
+docker-compose -f docker-compose.test.yml build test
 ```
 #### Docker Run
 ```sh
-docker run rest-api-test
+docker-compose -f docker-compose.test.yml up test
 ```
 ### Using Script
 ```sh
 ./runtest.sh
+```
+
+## Storage
+### DynamoDB Table Structure
+The DynamoDB table, GuestTable, has the following schema:
+
+id (Number): The unique identifier for each guest (Partition Key).
+<br>
+name (String): The name of the guest.
+<br>
+### S3 Bucket Structure
+The S3 bucket, guest-bucket, stores objects with the following structure:
+
+The key is the id of the guest.<br>
+The value is the name of the guest.
