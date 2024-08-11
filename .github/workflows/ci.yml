@@ -52,7 +52,7 @@ jobs:
         image: localstack/localstack
         options: --privileged
         ports:
-          - 4567:4566
+          - 4566:4566
 
     steps:
     - uses: actions/checkout@v4
