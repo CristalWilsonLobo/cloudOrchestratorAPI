@@ -42,6 +42,7 @@ jobs:
 
     - name: Test
       run: |
+        docker container ls
         docker-compose -f docker-compose.test.yml up test
 
   build:
@@ -80,4 +81,5 @@ jobs:
 
     - name: Build and run
       run: |
+        docker container ls
         docker-compose up
