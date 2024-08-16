@@ -39,7 +39,10 @@ jobs:
     - name: Build Docker images
       run: |
         docker-compose -f docker-compose.test.yml build test
-
+        
+    - name: Wait for LocalStack to be ready
+      run: sleep 60  
+      
     - name: Test
       run: |
         docker container ls
@@ -80,6 +83,9 @@ jobs:
     - name: Build Docker images
       run: |
         docker-compose build
+        
+    - name: Wait for LocalStack to be ready
+      run: sleep 60        
 
     - name: Build and run
       run: |
