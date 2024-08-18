@@ -11,8 +11,8 @@ session = boto3.Session(
 )
 
 # Configure AWS clients 
-dynamodb = session.resource('dynamodb', region_name='us-east-1', endpoint_url='http://localstack:6666')
-s3 = session.client('s3', region_name='us-east-1', endpoint_url='http://localstack:6666')
+dynamodb = session.resource('dynamodb', region_name='us-east-1', endpoint_url='http://localstack:4566')
+s3 = session.client('s3', region_name='us-east-1', endpoint_url='http://localstack:4566')
 
 # Guest table in DynamoDB 
 table_name = 'GuestTable'
