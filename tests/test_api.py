@@ -11,7 +11,7 @@ from app import restapp
 
 @pytest.fixture(scope='module')
 def client():
-    localstack_url = 'http://localhost:7777'
+    localstack_url = 'http://localhost:4566'
     
     session = boto3.Session(
         aws_access_key_id='test',
@@ -20,8 +20,8 @@ def client():
     )
 
 # Configure AWS clients 
-    dynamodb = session.resource('dynamodb', region_name='us-east-1', endpoint_url='http://localstack:7777')
-    s3 = session.client('s3', region_name='us-east-1', endpoint_url='http://localstack:7777')
+    dynamodb = session.resource('dynamodb', region_name='us-east-1', endpoint_url='http://localstack:4566')
+    s3 = session.client('s3', region_name='us-east-1', endpoint_url='http://localstack:4566')
 
     
     # DynamoDB table
